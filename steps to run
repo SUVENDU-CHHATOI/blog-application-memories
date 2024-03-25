@@ -3,6 +3,7 @@
 -  run 'npm install babel-eslint --save-dev' in case you get error with '.eslintrc.js' file
 3) open 'https://cloud.mongodb.com/' to create a cluster -> connect to application -> create database user -> add your current IP Address -> 'connect' your cluster -> set up an admin user and password -> copy the connect_url and paste in your 'index.js' file. Replace <username>:<password> in the url with that of the user created.
 4) navigate to 'server' folder -> run 'npm i' -> run 'npm start'
+- npm install 'nodemon'
 5) add a blog and submit in localhost:3000
 6) You should see a new database, collection and the new document created in your atlas cluster with the blog you just added. Also, you should see the blog in UI
 7) Backend endpoints
@@ -13,3 +14,58 @@ http://localhost:5000/posts
 -    run 'npm install dotenv' inside 'server' folder
 -    in index.js of 'sever' -> import dotenv from 'dotenv' -> dotenv.config()
 -    replace url 'CONNECTION_URL' with process.env.CONNECTION_URL and process.env.PORT
+
+9) Create a new git repo -> copy the main folder 'blog-application-memories'
+10) Follow steps in the git repo to push local changes to remote like
+- git init in your local
+- git add .
+- git commit -m "message"
+- git add remote origin "link of your newly created git repo"
+- git branch -M main (new branch created in your local repo)
+- git push -u origin main (pushed to the main branch of the remote repo)
+
+
+Deploy 'server' folder to Heroku 
+-------------------------------
+
+Install heroku for windows
+
+check heroku -v inside 'server' folder
+
+inside 'server' folder , run 'git init'
+
+Also, create a new file '.gitignore' and add 'node_modules' and '.env' files
+
+Then follow below
+$ heroku login
+
+Inside 'server' folder
+$ git init
+$ heroku git:remote -a blog-application-memories
+Deploy your application
+
+Commit your code to the repository and deploy it to Heroku using Git.
+
+$ git add .
+$ git commit -am "make it better"
+$ git push heroku master
+
+Then update 'master' to 'main' in heroku git following instructions from heroku
+
+Next, open 'Network Access' tab in your MongoDB Atlas 
+Add IP Address: 0.0.0.0 to allow database access from anywhere (i.e from our deployed application on heroku), and delete all other IP addresses from the list.
+
+Refresh heroku app, and the deployed version should run fine.
+Here's the deployed backend heroku app - 
+https://blog-application-memories-9e68ec8a6fe4.herokuapp.com/
+
+To access routes, try with 
+https://blog-application-memories-9e68ec8a6fe4.herokuapp.com/posts
+
+So now, our backend deployment is complete.
+
+Let's deploy our frontend application next.
+1) Navigate to client/src/api/index.js and replace 
+const url = 'http://localhost:5000/posts'; // to be run in localhost
+with
+const url = 'https://blog-application-memories-9e68ec8a6fe4.herokuapp.com/';
